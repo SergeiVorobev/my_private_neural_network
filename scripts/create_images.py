@@ -14,7 +14,7 @@ def save_image(name, image):
     plt.imshow(image, cmap='gray', vmin=0, vmax=1)
     plt.title(name)
     plt.axis('off')
-    plt.savefig(f'{name}.png', bbox_inches='tight')
+    plt.savefig(f'img/{name}.png', bbox_inches='tight')
     plt.show()
 
 # Создание изображений
