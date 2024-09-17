@@ -20,3 +20,5 @@ def save_image(name, image):
 # Создание изображений
 for name, img in images.items():
     save_image(name, img)
+
+#sdvsdv
