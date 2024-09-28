@@ -18,7 +18,7 @@ y = []
 class_mapping = {
     'minus.png': 0,
     'plus.png': 1,
-    'dot.png': 2,
+    'dot.png': 2,  # dot represents multiplication
     'division.png': 3
 }
 
@@ -52,16 +52,22 @@ train_size = int(0.75 * len(X))
 X_train, X_test = X[:train_size], X[train_size:]
 y_train, y_test = y[:train_size], y[train_size:]
 
-# Define the model using the Sequential API
+# Define the updated model with additional hidden layers and more neurons
 model = tf.keras.Sequential()
 
-# Add input layer (input shape is 9, because the flattened 3x3 image results in 9 features)
+# Input layer (input shape is 9, because the flattened 3x3 image results in 9 features)
 model.add(tf.keras.layers.Input(shape=(9,)))
 
-# Add a hidden layer with 5 neurons and ReLU activation
-model.add(tf.keras.layers.Dense(5, activation="relu", name="hidden_layer_1"))
+# Hidden layer 1 with 64 neurons
+model.add(tf.keras.layers.Dense(64, activation="relu", name="hidden_layer_1"))
 
-# Add the output layer with 4 neurons (for the 4 classes: minus, plus, dot, division)
+# Hidden layer 2 with 128 neurons
+model.add(tf.keras.layers.Dense(128, activation="relu", name="hidden_layer_2"))
+
+# Hidden layer 3 with 64 neurons
+model.add(tf.keras.layers.Dense(64, activation="relu", name="hidden_layer_3"))
+
+# Output layer with 4 neurons (for the 4 classes: minus, plus, dot, division)
 model.add(tf.keras.layers.Dense(num_classes, activation="softmax", name="output_layer"))
 
 # Print model summary
@@ -80,4 +86,6 @@ print(f"Test accuracy: {accuracy}")
 
 # Save the model
 model_dir = os.path.join(base_dir, '..', 'models')
-model.save(os.path.join(model_dir, 'my_model_v1_0.h5'))  # Save the trained model
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+model.save(os.path.join(model_dir, 'my_model_v2_0.h5'))  # Save the trained model
